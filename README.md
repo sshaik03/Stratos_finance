@@ -1,4 +1,4 @@
-# Stratos_finance
+# Stratos
 
 Project Name : Stratos Team Name: Team 27
 Aareb Chowdhury akchdry & Sameen Shaik sshaik03
