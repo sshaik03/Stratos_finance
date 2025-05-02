@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # API Gateway
   api-gateway:
@@ -8,21 +6,10 @@ services:
       - "8000:8000"
     depends_on:
       - user-service
-      - financial-data-service
-      - bill-service
-      - credit-service
-      - investment-service
-      - community-service
-      - education-service
     environment:
       - PORT=8000
       - USER_SERVICE_URL=http://user-service:8001
-      - FINANCIAL_SERVICE_URL=http://financial-data-service:8002
-      - BILL_SERVICE_URL=http://bill-service:8003
-      - CREDIT_SERVICE_URL=http://credit-service:8004
-      - INVESTMENT_SERVICE_URL=http://investment-service:8005
-      - COMMUNITY_SERVICE_URL=http://community-service:8006
-      - EDUCATION_SERVICE_URL=http://education-service:8007
+      - COMMUNITY_SERVICE_URL=http://community-service:8002
     networks:
       - stratos-network
 
@@ -40,83 +27,20 @@ services:
     networks:
       - stratos-network
 
-  # Financial Data Service
-  financial-data-service:
-    build: ./services/financial-data-service
-    ports:
-      - "8002:8002"
-    depends_on:
-      - financial-db
-    environment:
-      - PORT=8002
-      - MONGODB_URI=mongodb://financial-db:27017/stratos-finances
-    networks:
-      - stratos-network
-
-  # Bill Management Service
-  bill-service:
-    build: ./services/bill-service
-    ports:
-      - "8003:8003"
-    depends_on:
-      - bill-db
-    environment:
-      - PORT=8003
-      - MONGODB_URI=mongodb://bill-db:27017/stratos-bills
-    networks:
-      - stratos-network
-
-  # Credit Score Service
-  credit-service:
-    build: ./services/credit-service
-    ports:
-      - "8004:8004"
-    environment:
-      - PORT=8004
-      - MONGODB_URI=mongodb://credit-db:27017/stratos-credit
-    depends_on:
-      - credit-db
-    networks:
-      - stratos-network
-
-  # Investment Service
-  investment-service:
-    build: ./services/investment-service
-    ports:
-      - "8005:8005"
-    depends_on:
-      - investment-db
-    environment:
-      - PORT=8005
-      - MONGODB_URI=mongodb://investment-db:27017/stratos-investments
-    networks:
-      - stratos-network
-
   # Community Service
   community-service:
     build: ./services/community-service
     ports:
-      - "8006:8006"
+      - "8002:8002"
     depends_on:
       - community-db
     environment:
-      - PORT=8006
+      - PORT=8002
       - MONGODB_URI=mongodb://community-db:27017/stratos-community
+      - JWT_SECRET=your_jwt_secret_here
     networks:
       - stratos-network
 
-  # Education Service
-  education-service:
-    build: ./services/education-service
-    ports:
-      - "8007:8007"
-    depends_on:
-      - education-db
-    environment:
-      - PORT=8007
-      - MONGODB_URI=mongodb://education-db:27017/stratos-education
-    networks:
-      - stratos-network
 
   # Databases for each service
   user-db:
@@ -126,34 +50,8 @@ services:
     networks:
       - stratos-network
 
-  financial-db:
-    image: mongo:latest
-    volumes:
-      - financial-data:/data/db
-    networks:
-      - stratos-network
 
-  bill-db:
-    image: mongo:latest
-    volumes:
-      - bill-data:/data/db
-    networks:
-      - stratos-network
-
-  credit-db:
-    image: mongo:latest
-    volumes:
-      - credit-data:/data/db
-    networks:
-      - stratos-network
-
-  investment-db:
-    image: mongo:latest
-    volumes:
-      - investment-data:/data/db
-    networks:
-      - stratos-network
-
+  # Add community database
   community-db:
     image: mongo:latest
     volumes:
@@ -161,21 +59,9 @@ services:
     networks:
       - stratos-network
 
-  education-db:
-    image: mongo:latest
-    volumes:
-      - education-data:/data/db
-    networks:
-      - stratos-network
-
 volumes:
   user-data:
-  financial-data:
-  bill-data:
-  credit-data:
-  investment-data:
   community-data:
-  education-data:
 
 networks:
   stratos-network:

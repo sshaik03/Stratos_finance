@@ -2,6 +2,7 @@ const express = require('express');
 const morgan = require('morgan');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const cors = require('cors');
+const proxy = require('express-http-proxy');
 
 const app = express();
 
@@ -20,8 +21,11 @@ const {
 // Logging
 app.use(morgan('dev'));
 
-// CORS
-app.use(cors());
+// Enable CORS for frontend
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true
+}));
 
 // Parse JSON bodies
 app.use(express.json());
@@ -72,12 +76,15 @@ app.use('/api/investments', createProxyMiddleware({
   },
 }));
 
-app.use('/api/community', createProxyMiddleware({
-  target: COMMUNITY_SERVICE_URL,
-  changeOrigin: true,
-  pathRewrite: {
-    '^/api/community': '/api',
+app.use('/api/community', proxy(process.env.COMMUNITY_SERVICE_URL, {
+  proxyReqPathResolver: (req) => {
+    console.log('Proxying to community service:', req.url); // Debug log
+    return `/api${req.url}`;
   },
+  proxyErrorHandler: (err, res, next) => {
+    console.error('Proxy error:', err);
+    next(err);
+  }
 }));
 
 app.use('/api/education', createProxyMiddleware({
@@ -95,6 +102,6 @@ app.use((err, req, res, next) => {
 });
 
 // Start the server
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
   console.log(`API Gateway running on port ${PORT}`);
 });
