@@ -40,11 +40,11 @@ const menuItems = [
   { name: 'Dashboard', icon: <DashboardIcon />, path: '/' },
   { name: 'Bill Tracker', icon: <BillIcon />, path: '/bills' },
   { name: 'Payment Tracker', icon: <PaymentIcon />, path: '/payments' },
-  { name: 'Credit Score', icon: <CreditScoreIcon />, path: '/credit' },
-  { name: 'Investing', icon: <InvestingIcon />, path: '/investing' },
+  // { name: 'Credit Score', icon: <CreditScoreIcon />, path: '/credit' },
+  // { name: 'Investing', icon: <InvestingIcon />, path: '/investing' },
   { name: 'Community', icon: <CommunityIcon />, path: '/community' },
-  { name: 'Education', icon: <EducationIcon />, path: '/education' },
-  { name: 'Settings', icon: <SettingsIcon />, path: '/settings' },
+  // { name: 'Education', icon: <EducationIcon />, path: '/education' },
+  // { name: 'Settings', icon: <SettingsIcon />, path: '/settings' },
 ];
 
 function Layout({ children }) {

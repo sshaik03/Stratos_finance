@@ -19,11 +19,11 @@ function Sidebar() {
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/' },
     { text: 'Bill Tracker', icon: <BillIcon />, path: '/bills' },
     { text: 'Payment Tracker', icon: <PaymentIcon />, path: '/payments' },
-    { text: 'Credit Score', icon: <CreditIcon />, path: '/credit' },
-    { text: 'Investing', icon: <InvestingIcon />, path: '/investing' },
+    // { text: 'Credit Score', icon: <CreditIcon />, path: '/credit' },
+    // { text: 'Investing', icon: <InvestingIcon />, path: '/investing' },
     { text: 'Community', icon: <CommunityIcon />, path: '/community' },
-    { text: 'Education', icon: <EducationIcon />, path: '/education' },
-    { text: 'Settings', icon: <SettingsIcon />, path: '/settings' }
+    // { text: 'Education', icon: <EducationIcon />, path: '/education' },
+    // { text: 'Settings', icon: <SettingsIcon />, path: '/settings' }
   ];
 
   return (
