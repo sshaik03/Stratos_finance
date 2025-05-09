@@ -36,11 +36,13 @@ const postSchema = new mongoose.Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
   author: { type: String, required: true },
+  userId: { type: String, required: true },
   publishDate: { type: Date, default: Date.now },
+  likes: { type: Number, default: 0 },
   replies: [
     {
-      content: String,
-      author: String,
+      content: { type: String, required: true },
+      author: { type: String, required: true },
       date: { type: Date, default: Date.now }
     }
   ]
@@ -48,7 +50,7 @@ const postSchema = new mongoose.Schema({
 
 const Post = mongoose.model('Post', postSchema);
 
-// Routes
+// Routes for Education Articles
 app.get('/api/education/articles', async (req, res) => {
   try {
     const { category } = req.query;
@@ -61,7 +63,22 @@ app.get('/api/education/articles', async (req, res) => {
   }
 });
 
-app.get('/api/education/community', async (req, res) => {
+app.get('/api/education/articles/:id', async (req, res) => {
+  try {
+    const article = await Article.findById(req.params.id);
+    
+    if (!article) {
+      return res.status(404).json({ message: 'Article not found' });
+    }
+    
+    res.json(article);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+// Routes for Community Forum
+app.get('/api/community/posts', async (req, res) => {
   try {
     const posts = await Post.find().sort({ publishDate: -1 });
     res.json(posts);
@@ -70,7 +87,21 @@ app.get('/api/education/community', async (req, res) => {
   }
 });
 
-app.post('/api/education/community', async (req, res) => {
+app.get('/api/community/posts/:id', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    
+    res.json(post);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+app.post('/api/community/posts', async (req, res) => {
   try {
     const post = new Post(req.body);
     await post.save();
@@ -80,7 +111,45 @@ app.post('/api/education/community', async (req, res) => {
   }
 });
 
-// Add this near the end of the file, before the app.listen call
+app.post('/api/community/posts/:id/replies', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    
+    const { content, author } = req.body;
+    
+    post.replies.push({
+      content,
+      author,
+      date: new Date()
+    });
+    
+    await post.save();
+    res.status(201).json(post);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
+app.post('/api/community/posts/:id/like', async (req, res) => {
+  try {
+    const post = await Post.findById(req.params.id);
+    
+    if (!post) {
+      return res.status(404).json({ message: 'Post not found' });
+    }
+    
+    post.likes += 1;
+    await post.save();
+    
+    res.json({ success: true, likes: post.likes });
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
 
 // Add a root route for health check
 app.get('/', (req, res) => {
