@@ -1,5 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
 
+:root {
+  --primary-color: #2563eb;
+  --primary-light: #93c5fd;
+  --secondary-color: #4f46e5;
+  --text-dark: #1e293b;
+  --text-light: #64748b;
+  --text-muted: #94a3b8;
+  --success-color: #10b981;
+  --error-color: #ef4444;
+  --warning-color: #f59e0b;
+  --bg-light: #f8fafc;
+  --bg-white: #ffffff;
+  --border-color: #e2e8f0;
+  --border-color-light: #f1f5f9;
+  --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
 body {
   margin: 0;
   font-family: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +30,9 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #F5F7FA;
+  background-color: var(--bg-light);
+  color: var(--text-dark);
+  line-height: 1.6;
 }
 
 code {
@@ -33,4 +58,157 @@ code {
 
 ::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+
+/* Typography */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+  line-height: 1.3;
+  margin-bottom: 0.5rem;
+  color: var(--text-dark);
+}
+
+p {
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Layout improvements */
+.MuiContainer-root {
+  padding: 1.5rem;
+}
+
+.MuiPaper-root {
+  border-radius: 12px !important;
+  box-shadow: var(--box-shadow) !important;
+  border: 1px solid var(--border-color-light);
+}
+
+.MuiCard-root {
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.MuiCard-root:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* Dashboard cards */
+.dashboard-card {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.dashboard-card-content {
+  flex-grow: 1;
+  padding: 1.5rem !important;
+}
+
+.dashboard-card-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+/* Charts and graphs */
+.chart-container {
+  height: 300px;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+/* Tables */
+.MuiTableContainer-root {
+  border-radius: 12px !important;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+.MuiTableHead-root {
+  background-color: #f8fafc;
+}
+
+.MuiTableCell-head {
+  font-weight: 600 !important;
+  color: var(--text-dark) !important;
+}
+
+.MuiTableRow-root:hover {
+  background-color: #f1f5f9;
+}
+
+/* Forms */
+.MuiFormControl-root {
+  margin-bottom: 1.5rem !important;
+}
+
+.MuiInputBase-root {
+  border-radius: 8px !important;
+}
+
+.MuiButton-contained {
+  border-radius: 8px !important;
+  text-transform: none !important;
+  font-weight: 500 !important;
+  padding: 0.5rem 1.5rem !important;
+  box-shadow: none !important;
+}
+
+.MuiButton-contained:hover {
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06) !important;
+}
+
+/* Status colors */
+.status-success {
+  color: var(--success-color) !important;
+}
+
+.status-error {
+  color: var(--error-color) !important;
+}
+
+.status-warning {
+  color: var(--warning-color) !important;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .MuiContainer-root {
+    padding: 1rem;
+  }
+  
+  .dashboard-card-content {
+    padding: 1rem !important;
+  }
+}
+
+/* App Layout specific styles */
+.app-layout {
+  min-height: 100vh;
+  display: flex;
+}
+
+.app-main {
+  flex-grow: 1;
+  padding: 1.5rem;
+  margin-top: 64px; /* Appbar height */
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s ease-in-out;
 }
