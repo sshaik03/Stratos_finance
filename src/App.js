@@ -18,7 +18,11 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/bills" element={<BillTracker />} />
           <Route path="/payments" element={<PaymentTracker />} />
-          {/* Add other routes here */}
+          <Route path="/credit" element={<CreditScore />} />
+          <Route path="/investing" element={<Investing />} />
+          <Route path="/community" element={<Community />} />
+          <Route path="/education" element={<Education />} />
+          <Route path="/settings" element={<Settings />} />
         </Routes>
       </Layout>
     </Router>

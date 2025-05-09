@@ -3,7 +3,8 @@ import {
   mockBillsService, 
   mockTransactionService, 
   mockInvestmentService,
-  mockBudgetService
+  mockBudgetService,
+  mockCommunityService
 } from './mockData';
 
 // Create axios instance
@@ -65,6 +66,17 @@ export const investmentService = USE_MOCK
       getInvestments: (userId) => api.get('/investments', { params: { userId } }),
       addInvestment: (investment) => api.post('/investments', investment),
       updateInvestment: (investmentId, data) => api.put(`/investments/${investmentId}`, data),
+    };
+
+// Community service
+export const communityService = USE_MOCK
+  ? mockCommunityService
+  : {
+      getPosts: () => api.get('/community/posts'),
+      getPost: (postId) => api.get(`/community/posts/${postId}`),
+      addPost: (post) => api.post('/community/posts', post),
+      addReply: (postId, reply) => api.post(`/community/posts/${postId}/replies`, reply),
+      likePost: (postId) => api.post(`/community/posts/${postId}/like`),
     };
 
 // Education service
